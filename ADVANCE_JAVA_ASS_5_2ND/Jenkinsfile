@@ -1,0 +1,58 @@
+pipeline {
+agent any
+
+tools{
+maven "MAVEN_HOME"
+}
+
+
+
+stages {
+
+stage("Checkout code"){
+steps
+{
+checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'utkarsh.dixit@nagarro.com', url: 'https://git.nagarro.com/GITG00641/Java/utkarsh-dixit.git']]])
+
+echo 'Check Out'
+}
+}
+stage('Clean') {
+steps {
+bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml clean'
+echo 'Cleaning..'
+}
+}
+stage('Compile') {
+steps {
+bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml compile'
+echo 'Compiling..'
+}
+}
+stage('Test') {
+steps {
+bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml test'
+echo 'Testing..'
+}
+}
+stage('Packaging') {
+steps {
+bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml package'
+echo 'Packageing..'
+}
+}
+stage('Install') {
+steps {
+bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml install'
+echo 'Installing..'
+}
+}
+stage('SonarQube analysis') {
+    steps {
+      bat 'mvn -f LibraryManagementSystem/ADVANCE_JAVA_ASS_5_2ND/pom.xml clean verify sonar:sonar -Dsonar.projectKey=backend -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_555539622d0c14d5f479e3f6f31a7488b2434126'
+  echo 'sonarqube code analysys..'
+}
+}
+
+}
+}

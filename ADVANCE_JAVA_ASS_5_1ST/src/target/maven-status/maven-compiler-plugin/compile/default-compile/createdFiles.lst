@@ -1,0 +1,10 @@
+spring\web\services\BookServices.class
+spring\web\configuration\WebClientConfiguration.class
+spring\web\entity\Book.class
+spring\web\entity\Librarian.class
+spring\web\configuration\WebApplicationContextConfiguration.class
+spring\web\controller\librarianController.class
+spring\web\entity\Author.class
+spring\web\configuration\DispatcherServletinitializer.class
+spring\web\services\AuthorServices.class
+spring\web\services\LibrarianServices.class
